@@ -1,0 +1,5 @@
+<LICENSE TEXT - e.g. MIT License>
+
+Copyright (c) <YEAR> <COPYRIGHT HOLDER>
+
+<Replace this file with your chosen license text.>
