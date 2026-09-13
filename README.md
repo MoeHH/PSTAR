@@ -1,4 +1,6 @@
-<!-- PrePrint available @ <ADD_PREPRINT_URL_HERE> -->
+# Citation
+
+This work was submitted to the *AI* (MDPI) Special Issue Integrating Large Language Models into Robotic Autonomy (https://www.mdpi.com/journal/ai/special_issues/26397176N2) and is under review.
 
 # PSTAR A Unified One-Shot Autoregressive Model for Path Planning
 
