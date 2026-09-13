@@ -1,26 +1,10 @@
 <!-- PrePrint available @ <ADD_PREPRINT_URL_HERE> -->
 
-# PSTAR: Autoregressive Grid Path Planning with a Transformer and a Route-Availability Gate
+# PSTAR A Unified One-Shot Autoregressive Model for Path Planning
 
-**Abstract:** Classical grid path planners such as A\* solve each query from scratch with an
-explicit search over the state space. In this work we cast 2D grid path planning as an
-autoregressive sequence-generation problem, following the design principles of Large Language
-Models (LLMs). Given a grid encoded as a context of per-cell feature tokens (cell index,
-coordinates, and cell status), a Transformer with a PerceiverAR-style attention mechanism and
-2D sinusoidal positional encoding is trained to predict the next move direction (Up, Down,
-Right, Left) one step at a time until the goal is reached. Training uses autoregressive teacher
-forcing on solvable grids whose ground-truth routes are produced by A\*, with a causal mask that
-prevents future-step leakage and an optional goal-directed auxiliary loss. Because a generative
-planner will attempt a rollout even on grids that have no valid route, we add **RAGate**, a
-lightweight route-availability gate that classifies each grid as *Route Available* or *No Route
-Available* from the Transformer's own embeddings (LDA, MLP, or XGBoost) before any rollout is
-run. A unified framework chains the gate and the planner so that unsolvable grids are blocked
-and only feasible grids are handed to the generative rollout. Our results indicate that the
-Transformer planner recovers near-optimal routes on 10&times;10 grids and that the gate reliably
-screens out unsolvable configurations, avoiding wasted generation.
+**Abstract:** Autonomous systems require path planners that execute within strict real-time constraints. Classical grid search algorithms guarantee optimality but waste compute by recalculating routes from scratch without leveraging past spatial experience. To bypass runtime search entirely, we propose a search-free planning framework that generates collision-free grid routes in a single autoregressive rollout. Built on a PerceiverAR architecture trained on A* optimal routes, our model tokenizes 2D grid contexts, obstacles, and target coordinates into a unified spatial representation to predict end to end paths. To avoid wasted compute on impossible queries, we pair path generation with an upfront, XGBoost-based route-availability gate that identifies unsolvable maps before model rollout. Evaluated across diverse obstacle densities, the route availability gate achieved  99.34\% accuracy, while the transformer generator produces optimal routes in 99.66\% of solvable test cases. Together, this yields a unified framework pipeline that immediately filters infeasible requests while delivering constant-time, near-optimal path generation.
 
-**Keywords:** Transformer; PerceiverAR; Autoregressive Generation; Path Planning; A\*;
-Grid Navigation; Route-Availability Gate; Classifier; Combinatorial Search
+**Keywords:** Path Planning; Transformer; PerceiverAR; Grid Navigation; Constant-Time Inference; Autoregressive path generation; Imitation Learning
 
 ---
 
@@ -32,13 +16,13 @@ produced by the companion repository
 
 * **PSTAR model** (`PSTARModel/`) — the PerceiverAR Transformer backbone, the direction-model
   wrapper that emits U/D/R/L logits and computes the loss, the autoregressive training loop,
-  the inference rollout, and route evaluation / visualization.
+  the inference rollout, and route evaluation/visualization.
 * **RAGate gate** (`RAGateModel/`) — feature extraction from the trained Transformer plus three
   interchangeable route-availability classifiers (LDA, MLP, XGBoost) and a comparison report.
 * **Shared** (`shared/`) — the streaming dataloader, the unified inference framework
   (gate + rollout), and common utilities.
 
-All behaviour is driven by a single, fully commented configuration file: `config.py`.
+A single, fully commented configuration file drives all behavior: `config.py`.
 
 ## Requirements
 
@@ -116,7 +100,7 @@ python main.py
 Feature toggles at the top of `config.py` control the per-cell feature vector. Features f0–f3
 (cell index, x, y, status) are always on; `feature_dx_dy`, `feature_free_neighbours`, and
 `feature_is_interior` add optional features. **`feature_size` is computed automatically — do not
-set it by hand.** At startup the pipeline prints a diagnostics banner showing the active device
+set it by hand.** At startup, the pipeline prints a diagnostics banner showing the active device
 (GPU/CPU) and the exact feature layout for the run.
 
 Checkpoints and results are written under `Results/PSTAR/` and `Results/RAGate/`. To resume
@@ -188,7 +172,7 @@ PSTAR/
 ## Related repository
 
 * [`ASTAR_Dataset_Generation`](../ASTAR_Dataset_Generation) — generates the A\* grid datasets
-  (solvable / unsolvable splits and the RAGate classifier dataset) consumed here.
+  (solvable/unsolvable splits and the RAGate classifier dataset) consumed here.
 
 ## License
 
