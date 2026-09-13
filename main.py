@@ -63,7 +63,7 @@ from compare_classifiers import main as compare_classifiers_main
 
 
 def main():
-    print("\n=== Starting Path Plainning Transformer ===")
+    print("\n=== Starting PSTAR Model for Path Planning Transformer ===")
 
 
     if config.get("pstar_training", False):
