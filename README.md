@@ -1,6 +1,6 @@
 This work was submitted to the AI (MDPI) Special Issue, Integrating Large Language Models into Robotic Autonomy (https://www.mdpi.com/journal/ai/special_issues/26397176N2) and is under review.
 
-# PSTAR: A Unified One-Shot Autoregressive Model for Path Planning
+# PSTAR - A Unified One-Shot Autoregressive Model for Path Planning
 
 PSTAR generates grid routes with a transformer in a single autoregressive rollout, without graph search.
 An optional route-availability gate (RAGate) rejects unsolvable maps before decoding.
