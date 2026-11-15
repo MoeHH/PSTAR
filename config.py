@@ -39,7 +39,7 @@ config = {
     "timing_benchmark":  False,
 
     # ---- Reproducibility ----------------------------------------------------
-    "random_seed":   42,
+    "random_seed":   42,             # 32, 42, and 52 
     "deterministic": True,           # deterministic GPU kernels (slower)
     "resume_from_checkpoint": "",    # path to <arch>_last_model.pt to resume
 
